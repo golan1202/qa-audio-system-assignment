@@ -1,4 +1,5 @@
-**Test Strategy**
+## Test Strategy ## 
+
 This project implements a layered QA strategy covering every part of the pipeline.
 
 Test Layers
