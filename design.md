@@ -250,7 +250,7 @@
 - **Integration tests:** Automated with Pytest + Docker/K8s test environment.
 - **API tests:** Automated with Pytest + requests or Postman collections in CI.
 - **Performance tests:** Automated via Locust or JMeter, triggered on demand or pre‑release.
-- **Security checks:** Automated dependency scanning (e.g., GitHub Dependabot), basic auth tests in CI.
+- **Security checks:** Automated dependency scanning, basic auth tests in CI.
 
 ### 4.2 Tools
 
@@ -259,7 +259,7 @@
 - **Load testing:** Locust (Python‑based) or JMeter
 - **Mocking:** unittest.mock / pytest‑mock
 - **Containers:** Docker + docker‑compose or K8s test namespace
-- **CI/CD:** GitHub Actions (or Jenkins)
+- **CI/CD:**  Jenkins
 
 
 
@@ -280,10 +280,9 @@
 
 ### 5.2 Tools
 
-- GitHub Actions
-- Docker + docker-compose
+- Jenkins
 - Pytest
-- Allure / JUnit XML
+- Allure
 - Slack / Teams notifications
 
 
