@@ -3,7 +3,8 @@ import psycopg2
 import pytest
 from fastapi.testclient import TestClient
 from fastapi import FastAPI
-
+from logstash_async.handler import AsynchronousLogstashHandler
+from logstash_async.formatter import LogstashFormatter
 
 @pytest.fixture(scope="session")
 def db_connection():
