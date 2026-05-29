@@ -9,10 +9,12 @@ This repository contains a complete test design and example implementation for a
 qa-audio-system-assignment/
 ├─ README.md
 ├─ design.md
-├─ test_strategy_and_pipeline.md
+├─ test_strategy.md
 ├─ conftest.py
 ├─ pytest.ini
 ├─ requirements.txt
+├─ .gitignore
+├─ .env
 │
 ├─ src/
 │  ├─ algo_a.py
@@ -36,11 +38,14 @@ qa-audio-system-assignment/
 │  │  └─ test_rest_api_end_to_end.py
 │  │
 │  ├─ performance/
-│  │  └─ locustfile.py
+│  │  ├─ locustfile.py
+│  │  └─ locust_config.py
 │  │
 │  └─ security/
 │     └─ test_rest_api_security.py
+│
 
+```
 
 
 
