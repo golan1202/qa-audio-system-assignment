@@ -40,7 +40,7 @@ qa-audio-system-assignment/
 │  │
 │  └─ security/
 │     └─ test_rest_api_security.py
-
+```
 
 
 
@@ -51,29 +51,35 @@ qa-audio-system-assignment/
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-
+```
 
 **Run unit tests**
+```text
 pytest tests/unit
-
+```
 **Run security tests**
+```text
 pytest tests/security
-
+```
 **Run integration tests**
+```text
 pytest tests/integration
-
+```
 **Run REST API**
+```text
 uvicorn src.rest_api:app --reload --port 8000
-
+```
 **Run performance tests**
+```text
 jmeter -n -t jmeter-plan.jmx -l results.jtl
-
+```
 You can then generate an HTML report with:
+```text
 allure serve reports/allure
-
-**Jenkins CI/CD Setup Prerequisites**
-Jenkins 2.440+
-Jenkins plugins:
+```
+### Jenkins CI/CD Setup Prerequisites ###
+Jenkins 2.440+  
+<ins>Jenkins plugins:</ins>
 - Pipeline
 - Allure Jenkins Plugin
 - Docker Pipeline
