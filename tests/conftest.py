@@ -3,9 +3,10 @@ import os
 import psycopg2
 import pytest
 from fastapi.testclient import TestClient
-from fastapi import FastAPI
 from logstash_async.handler import AsynchronousLogstashHandler
 from logstash_async.formatter import LogstashFormatter
+from src.rest_api import create_app
+
 
 @pytest.fixture(scope="session")
 def db_connection():
@@ -41,7 +42,7 @@ def rabbitmq_client():
 @pytest.fixture(scope="session")
 def api_client():
     api_base = os.getenv("API_BASE", "http://localhost:8000")
-    app = FastAPI()
+    app = create_app()
     client = TestClient(app)
     return client, api_base
 
