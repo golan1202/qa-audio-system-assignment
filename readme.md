@@ -42,7 +42,7 @@ qa-audio-system-assignment/
 │  │
 │  └─ security/
 │     └─ test_rest_api_security.py
-
+```
 
 
 
@@ -77,7 +77,7 @@ jmeter -n -t jmeter-plan.jmx -l results.jtl
 ```
 You can then generate an HTML report with:
 allure serve reports/allure
-```
+
 ### Jenkins CI/CD Setup Prerequisites ###
 Jenkins 2.440+  
 <ins>Jenkins plugins:</ins>
