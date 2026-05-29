@@ -55,7 +55,7 @@ class HistoricalUser(HttpUser):
     def fetch_historical_data(self):
         sensor_id = random.choice(SENSOR_IDS)
         with self.client.get(
-            f"/historical?sensor_id={sensor_id}",
+            f"{API_BASE}/historical?sensor_id={sensor_id}",
             name="GET /historical",
             catch_response=True
         ) as response:
@@ -81,12 +81,12 @@ class MixedTrafficUser(HttpUser):
     @task(3)
     def realtime(self):
         payload = generate_audio_payload()
-        self.client.post("/realtime", json=payload, name="POST /realtime")
+        self.client.post(f"{API_BASE}/realtime", json=payload, name="POST /realtime")
 
     @task(1)
     def historical(self):
         sensor_id = random.choice(SENSOR_IDS)
-        self.client.get(f"/historical?sensor_id={sensor_id}", name="GET /historical")
+        self.client.get(f"{API_BASE}/historical?sensor_id={sensor_id}", name="GET /historical")
 
 
 # ---------------------------------------------------------
@@ -103,7 +103,7 @@ class RabbitMQUser(HttpUser):
     @task
     def publish_to_queue(self):
         payload = generate_audio_payload()
-        self.client.post("/test/publish", json=payload, name="POST /test/publish")
+        self.client.post(f"{API_BASE}/test/publish", json=payload, name="POST /test/publish")
 
 
 # ---------------------------------------------------------
@@ -131,4 +131,4 @@ class StepLoadShape(LoadTestShape):
         if user_count > self.max_users:
             return None
 
-        return (user_count, user_count)
+        return user_count, user_count

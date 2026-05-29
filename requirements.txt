@@ -1,6 +1,8 @@
-pytest
+pytest~=7.4.4
 uvicorn
 psycopg2-binary
 locust
 requests
 allure-pytest
+
+fastapi~=0.103.2
