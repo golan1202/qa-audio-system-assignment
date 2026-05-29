@@ -5,6 +5,7 @@ pipeline {
         PYTHON = "python3"
         VENV = ".venv"
         ALLURE_RESULTS = "reports/allure"
+        LOCUST_FILE = "tests/performance/locustfile.py"
     }
 
     stages {
@@ -84,11 +85,22 @@ pipeline {
             }
             steps {
                 sh """
-                    jmeter -n -t jmeter-plan.jmx -l results.jtl
+                    . ${VENV}/bin/activate
+                    locust -f ${LOCUST_FILE} \
+                        --headless \
+                        --users 50 \
+                        --spawn-rate 10 \
+                        --run-time 5m \
+                        --html locust_report.html
                 """
             }
         }
 
+        stage('Archive Results') {
+            steps {
+                archiveArtifacts artifacts: 'locust_report.html', fingerprint: true
+            }
+        }
     }
 
     post {
