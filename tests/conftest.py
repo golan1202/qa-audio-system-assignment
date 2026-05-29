@@ -42,3 +42,32 @@ def api_client():
     app = FastAPI()
     client = TestClient(app)
     return client, api_base
+
+
+@pytest.fixture(scope="session", autouse=True)
+def test_logger():
+    """
+    Global logger for all tests.
+    Sends logs to Logstash/ELK.
+    """
+    logger = logging.getLogger("python-elk-logger")
+    logger.setLevel(logging.INFO)
+
+    # Prevent duplicate handlers when pytest reloads modules
+    if not logger.handlers:
+
+        logstash_host = os.getenv("LOGSTASH_HOST", "localhost")
+        logstash_port = int(os.getenv("LOGSTASH_PORT", 5000))
+
+        handler = AsynchronousLogstashHandler(
+            host=logstash_host,
+            port=logstash_port,
+            database_path=None
+        )
+        handler.setFormatter(LogstashFormatter())
+        logger.addHandler(handler)
+        logger.info("Test session started")
+
+    yield logger
+
+    logger.info("Test session finished")
