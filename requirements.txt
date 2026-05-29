@@ -1,8 +1,12 @@
-pytest~=7.4.4
+pytest
 uvicorn
 psycopg2-binary
 locust
 requests
 allure-pytest
-
-fastapi~=0.103.2
+pytest-asyncio
+python-logstash-async
+python-dotenv
+fastapi
+httpx
+pydantic

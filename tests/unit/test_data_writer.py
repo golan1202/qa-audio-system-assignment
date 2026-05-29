@@ -1,4 +1,5 @@
-from src.data_writer import write_feature_to_db
+from src.data_writer import DataWriter
+
 
 def test_data_writer_inserts_record(db_connection):
     feature = {
@@ -8,7 +9,7 @@ def test_data_writer_inserts_record(db_connection):
         "featureB": {"normalized_mean": 1.0},
     }
 
-    write_feature_to_db(db_connection, feature)
+    DataWriter.write_feature_to_db(db_connection, feature)
 
     cur = db_connection.cursor()
     cur.execute("SELECT sensor_id FROM features WHERE sensor_id='s1'")

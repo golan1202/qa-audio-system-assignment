@@ -1,3 +1,4 @@
+import logging
 import os
 import psycopg2
 import pytest

@@ -1,3 +1,5 @@
+from src.algo_a import AlgoA
+
 def test_algo_a_generates_expected_feature_keys():
     audio_msg = {
         "sensor_id": "s1",
@@ -5,7 +7,7 @@ def test_algo_a_generates_expected_feature_keys():
         "audio": [0.1, 0.2, 0.3]
     }
 
-    result = algo_a_process(audio_msg)
+    result = AlgoA.process(audio_msg)
 
     assert result["sensor_id"] == "s1"
     assert "featureA" in result
