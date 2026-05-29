@@ -1,0 +1,6 @@
+pytest
+uvicorn
+psycopg2-binary
+locust
+requests
+allure-pytest
