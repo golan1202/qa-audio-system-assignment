@@ -1,4 +1,11 @@
-def test_datawriter_consumes_queue_and_writes_to_db(rabbitmq_client, db_connection):
+import time
+
+
+def test_datawriter_consumes_queue_and_writes_to_db(
+    rabbitmq_client,
+    db_connection,
+    queue_consumer
+):
     msg = {
         "sensor_id": "s1",
         "timestamp": "2025-01-01T10:00:00Z",
@@ -8,8 +15,9 @@ def test_datawriter_consumes_queue_and_writes_to_db(rabbitmq_client, db_connecti
 
     rabbitmq_client.publish("features_queue", msg)
 
-    # DataWriter runs in background
-    # Wait for DB write
+    # Wait for consumer to process
+    time.sleep(0.5)
+
     cur = db_connection.cursor()
     cur.execute("SELECT * FROM features WHERE sensor_id='s1'")
     row = cur.fetchone()

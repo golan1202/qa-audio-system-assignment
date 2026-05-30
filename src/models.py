@@ -1,7 +1,9 @@
 from pydantic import BaseModel
 
 class AudioEvent(BaseModel):
-    pass
+    sensor_id: int
+    value: float
 
 class AudioResponse(BaseModel):
-    pass
+    status: str
+    processed: float

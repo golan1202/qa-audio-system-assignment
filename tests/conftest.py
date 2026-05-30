@@ -5,8 +5,10 @@ import pytest
 from fastapi.testclient import TestClient
 from logstash_async.handler import AsynchronousLogstashHandler
 from logstash_async.formatter import LogstashFormatter
-from src.rest_api import create_app
 
+from src.consumer import QueueConsumer
+from src.data_writer import DataWriter
+from src.rest_api import create_app, get_rabbitmq_client
 
 @pytest.fixture(scope="session")
 def db_connection():
@@ -31,19 +33,41 @@ def rabbitmq_client():
             self.password = os.getenv("RABBITMQ_PASSWORD", "guest")
             self.queue = os.getenv("RABBITMQ_QUEUE", "audio_events")
             self.vhost = os.getenv("RABBITMQ_VHOST", "/")
+            self.messages = []  # store published messages
 
-        def publish(self, queue, msg): ...
+        def publish(self, queue, msg):
+            self.messages.append({"queue": queue, "msg": msg})
 
-        def consume(self, queue, timeout=5): ...
+        def consume(self, queue, timeout=5):
+            for m in self.messages:
+                if m["queue"] == queue:
+                    return m["msg"]
+            return None
 
     return RabbitMQTestClient()
 
+@pytest.fixture(scope="session")
+def queue_consumer(rabbitmq_client, db_connection):
+    writer = DataWriter(db_connection)
+    consumer = QueueConsumer(
+        rabbitmq_client,
+        writer,
+        queue_name="features_queue"
+    )
+    consumer.start()
+    yield consumer
+    consumer.stop()
+
+
 
 @pytest.fixture(scope="session")
-def api_client():
+def api_client(rabbitmq_client):
     api_base = os.getenv("API_BASE", "http://localhost:8000")
     app = create_app()
-    client = TestClient(app)
+
+    # override dependency
+    app.dependency_overrides[get_rabbitmq_client] = lambda: rabbitmq_client
+    client =  TestClient(app)
     return client, api_base
 
 

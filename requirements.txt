@@ -10,3 +10,4 @@ python-dotenv
 fastapi
 httpx
 pydantic
+python3-pika

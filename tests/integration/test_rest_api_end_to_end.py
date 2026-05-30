@@ -1,4 +1,7 @@
-def test_rest_api_returns_realtime_data(api_client, rabbitmq_client):
+import time
+
+
+def test_rest_api_returns_realtime_data(api_client, rabbitmq_client, queue_consumer):
     client, api_base = api_client
     msg = {
         "sensor_id": "s1",
@@ -8,6 +11,9 @@ def test_rest_api_returns_realtime_data(api_client, rabbitmq_client):
     }
 
     rabbitmq_client.publish("features_queue", msg)
+
+    # Give consumer time to write to DB
+    time.sleep(0.5)
 
     resp = client.get(f"{api_base}/features/realtime?sensor_id=s1")
     assert resp.status_code == 200
