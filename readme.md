@@ -21,6 +21,8 @@ qa-audio-system-assignment/
 │  ├─ algo_b.py
 │  ├─ data_writer.py
 │  ├─ rest_api.py
+|  |- rabbitmq_client.py
+|  |- consumer.py
 │  └─ models.py
 │
 ├─ tests/
