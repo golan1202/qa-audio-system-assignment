@@ -73,10 +73,7 @@ pytest tests/integration
 ```text
 uvicorn src.rest_api:app --reload --port 8000
 ```
-**Run performance tests**
-```text
-jmeter -n -t jmeter-plan.jmx -l results.jtl
-```
+
 You can then generate an HTML report with:
 allure serve reports/allure
 
